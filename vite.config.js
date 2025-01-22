@@ -9,11 +9,15 @@ export default defineConfig({
         }),
     ],
     server: {
+        host: true,
+        cors: true,
+        origin: 'http://localhost:5174',
         hmr: {
-            host: 'localhost'
+            host: 'localhost',
+            protocol: 'ws'
         },
         watch: {
-            usePolling: true
+            usePolling: true,
         }
     },
 });

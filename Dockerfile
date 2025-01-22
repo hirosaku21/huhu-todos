@@ -22,9 +22,12 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer install
+RUN composer install --no-interaction --no-dev --prefer-dist \
+    && composer clear-cache
 
-RUN chown -R www-data:www-data /var/www/html/storage
-RUN chown -R www-data:www-data /var/www/html/bootstrap/cache
+RUN npm install && npm run build
 
-RUN npm install
+RUN chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html/storage \
+    && chown -R www-data:www-data /var/www/html/bootstrap/cache
