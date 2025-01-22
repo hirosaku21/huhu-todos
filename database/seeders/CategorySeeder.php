@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Category;
+
 
 class CategorySeeder extends Seeder
 {
@@ -12,6 +14,13 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Category::factory()->createMany([
+            [
+                'name' => '家事'
+            ],
+            [
+                'name' => '手続き'
+            ]
+        ]);
     }
 }

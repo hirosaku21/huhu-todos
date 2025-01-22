@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->name('todos.')->group(function () {
     Route::get('/', [TodoController::class, 'index'])->name('index');
     Route::get('/create', [TodoController::class, 'create'])->name('create');
+    Route::post('/store', [TodoController::class, 'store'])->name('store');
 });
 
 Route::middleware('auth')->group(function () {

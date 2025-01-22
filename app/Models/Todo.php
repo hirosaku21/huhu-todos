@@ -11,6 +11,13 @@ class Todo extends Model
     /** @use HasFactory<\Database\Factories\TodoFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'content',
+        'category_id',
+        'sharing_range',
+        'registered_by'
+    ];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -19,5 +26,10 @@ class Todo extends Model
     public function completed_by(): BelongsTo
     {
         return $this->belongsTo(User::class, 'completed_by');
+    }
+
+    public function registerd_by(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'registerd_by');
     }
 }

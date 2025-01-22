@@ -13,11 +13,6 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    public function completedTodos(): HasMany
-    {
-        return $this->hasMany(Todo::class, 'completed_by');
-    }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -50,5 +45,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function completedTodos(): HasMany
+    {
+        return $this->hasMany(Todo::class, 'completed_by');
+    }
+
+    public function registerdTodos(): HasMany
+    {
+        return $this->hasMany(Todo::class, 'registerd_by');
     }
 }

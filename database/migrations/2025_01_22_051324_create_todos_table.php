@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('content');
             $table->enum('sharing_range', ['share', 'personal']);
             $table->foreignId('completed_by')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('registered_by')->constrained('users')->onDelete('cascade');
             $table->smallInteger('completed')->default(0)->comment('0:未完了 1:完了');
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
