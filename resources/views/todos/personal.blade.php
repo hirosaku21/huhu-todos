@@ -4,24 +4,12 @@
             <button onclick="location.href='{{ route('todos.create') }}'"
                 class="inline-flex items-center bg-indigo-400 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-200 rounded text-base mt-4 md:mt-0">新規登録
             </button>
-            <div class="flex items-center">
-                <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button type="submit"
-                        class="inline-flex items-center border-0 py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0">ログアウト
-                    </button>
-                </form>
-                @if ($user->role === 'admin')
-                    <footer class="text-gray-600 body-font">
-                        <div
-                            class="container mx-auto flex flex-wrap justify-between p-5 flex-col md:flex-row items-center">
-                            <button onclick="location.href='{{ route('admin.index') }}'"
-                                class="inline-flex items-center bg-indigo-400 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-200 rounded text-base mt-4 md:mt-0">管理画面へ
-                            </button>
-                        </div>
-                    </footer>
-                @endif
-            </div>
+            <form action="{{ route('logout') }}" method="post">
+                @csrf
+                <button type="submit"
+                    class="inline-flex items-center border-0 py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0">ログアウト
+                </button>
+            </form>
         </div>
     </header>
     <section class="text-gray-600 body-font">
@@ -33,11 +21,11 @@
                             <p class="leading-relaxed mb-8">タスクを登録してください</p>
                         @else
                             <div class="flex mb-4 w-1/4">
+                                <button onclick="location.href='{{ route('todos.index') }}'"
+                                    class="flex-grow text-center border-b-2 border-gray-300 py-2 text-lg px-1">共有</button>
                                 <h2
                                     class="flex-grow text-center text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
-                                    共有</h2>
-                                <button onclick="location.href='{{ route('todos.personal') }}'"
-                                    class="flex-grow text-center border-b-2 border-gray-300 py-2 text-lg px-1">個人</button>
+                                    個人</h2>
                             </div>
                             @foreach ($todos as $todo)
                                 <tr>
