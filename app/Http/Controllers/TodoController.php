@@ -22,12 +22,13 @@ class TodoController extends Controller
 
     public function personal()
     {
+        $user = Auth::user();
         $todos = Todo::where([
             'completed' => 0,
             'sharing_range' => 'personal',
             'registered_by' => Auth::id()
         ])->get();
-        return view('todos.personal', ['todos' => $todos]);
+        return view('todos.personal', ['todos' => $todos, 'user' => $user]);
     }
 
     public function create()
