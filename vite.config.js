@@ -11,7 +11,7 @@ export default defineConfig({
     server: {
         host: true,
         cors: true,
-        origin: 'http://localhost:5174',
+        origin: 'http://localhost:5173',
         hmr: {
             host: 'localhost',
             protocol: 'ws'

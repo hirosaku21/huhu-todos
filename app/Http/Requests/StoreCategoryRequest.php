@@ -11,7 +11,7 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'max:100']
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'カテゴリー名を入力してください',
+            'name.max' => 'カテゴリー名は100文字以内で入力してください'
         ];
     }
 }

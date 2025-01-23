@@ -18,6 +18,10 @@ Route::middleware('auth')->name('todos.')->group(function () {
 
 Route::middleware('auth', 'admin')->name('admin.')->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('index');
+    Route::get('/admin/todos', [AdminController::class, 'todos'])->name('todos');
+    Route::get('/admin/categories', [AdminController::class, 'categoriesIndex'])->name('categories.index');
+    Route::get('/admin/categories/create', [AdminController::class, 'categoriesCreate'])->name('categories.create');
+    Route::post('/admin/categories/store', [AdminController::class, 'categoriesStore'])->name('categories.store');
 });
 
 Route::middleware('auth')->group(function () {

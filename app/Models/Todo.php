@@ -16,7 +16,9 @@ class Todo extends Model
         'category_id',
         'sharing_range',
         'registered_by',
-        'completed'
+        'completed',
+        'completed_by',
+        'completed_at'
     ];
 
     public function category(): BelongsTo
