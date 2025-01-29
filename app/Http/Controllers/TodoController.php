@@ -33,7 +33,7 @@ class TodoController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::get();
         return view('todos.create', ['categories' => $categories]);
     }
 
