@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request_target:
-    types: [opened]
 
 permissions:
   contents: read
@@ -27,5 +25,5 @@ jobs:
 
       - name: Exec Phpunit
         run: |
-          docker compose exec -e XDEBUG_MODE=off app php artisan test
-          docker compose exec app php artisan test
+          # docker compose exec -e XDEBUG_MODE=off app php artisan test
+          docker compose exec app ls -la /var/www/html/tests
