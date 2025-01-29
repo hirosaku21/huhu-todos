@@ -25,5 +25,4 @@ jobs:
 
       - name: Exec Phpunit
         run: |
-          # docker compose exec -e XDEBUG_MODE=off app php artisan test
-          docker compose exec app ls -la /var/www/html/tests
+          docker compose exec -e XDEBUG_MODE=off app php artisan test
