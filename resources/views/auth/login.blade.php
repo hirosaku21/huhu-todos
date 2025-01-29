@@ -1,4 +1,7 @@
 <x-guest-layout>
+    @php
+        // phpinfo();
+    @endphp
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 

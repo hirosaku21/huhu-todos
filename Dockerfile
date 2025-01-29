@@ -14,20 +14,17 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
+RUN pecl install xdebug \
+&& docker-php-ext-enable xdebug
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN a2enmod rewrite
 
 WORKDIR /var/www/html
 
-COPY . .
-
-RUN composer install --no-interaction --no-dev --prefer-dist \
-    && composer clear-cache
-
-RUN npm install && npm run build
-
-RUN chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html/storage \
-    && chown -R www-data:www-data /var/www/html/bootstrap/cache
+RUN mkdir -p storage bootstrap/cache \
+    && chmod -R 775 storage \
+    && chmod -R 775 bootstrap/cache \
+    && chown -R www-data:www-data storage \
+    && chown -R www-data:www-data bootstrap/cache
