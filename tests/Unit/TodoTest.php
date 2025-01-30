@@ -28,9 +28,6 @@ class TodoTest extends TestCase
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('/');
-        if ($response->status() === 500) {
-            echo $response;
-        }
         $response->assertStatus(200);
     }
 
