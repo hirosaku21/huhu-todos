@@ -30,5 +30,4 @@ jobs:
 
       - name: Exec Phpunit
         run: |
-          docker compose exec db mysql "SHOW TABLES;"
           docker compose exec -e XDEBUG_MODE=off app php artisan test
