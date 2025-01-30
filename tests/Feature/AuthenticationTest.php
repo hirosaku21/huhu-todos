@@ -18,7 +18,7 @@ class AuthenticationTest extends TestCase
         Artisan::call('migrate:fresh --seed');
     }
 
-    public function test_login_screen_can_be_rendered(): void
+    public function test_ログイン画面にアクセスできる(): void
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
