@@ -23,6 +23,12 @@ jobs:
           docker compose exec app php artisan key:generate
           docker compose exec app php artisan config:cache
 
+      - name: Prepare Test Database
+        run: |
+          sleep 10
+          docker compose exec db mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS test_huhu-todos;"
+
       - name: Exec Phpunit
         run: |
+          docker compose exec db mysql "SHOW TABLES;"
           docker compose exec -e XDEBUG_MODE=off app php artisan test
