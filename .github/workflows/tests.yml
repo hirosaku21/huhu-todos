@@ -27,7 +27,8 @@ jobs:
         run: |
           sleep 10
           docker compose exec db mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS test_todos;"
-          docker compose exec db mysql -uroot -proot -e "SHOW DATABASES";
+          docker compose exec app php artisan migrate:fresh --seed --env=testing
+          docker compose exec db mysql -uroot -proot -e "SHOW TABLES FROM test_todos";
 
       - name: Exec Phpunit
         run: |
