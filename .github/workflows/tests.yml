@@ -26,7 +26,7 @@ jobs:
       - name: Prepare Test Database
         run: |
           sleep 10
-          docker compose exec db mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS test_huhu-todos;"
+          docker compose exec db mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS test_todos;"
 
       - name: Exec Phpunit
         run: |
