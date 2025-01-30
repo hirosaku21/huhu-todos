@@ -31,4 +31,5 @@ jobs:
 
       - name: Exec Phpunit
         run: |
-          docker compose exec -e XDEBUG_MODE=off app php artisan test --env=testing -vvv
+          docker compose exec -e XDEBUG_MODE=off app php artisan test --env=testing
+          docker compose exec app cat storage/logs/laravel.log
