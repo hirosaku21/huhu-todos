@@ -29,14 +29,6 @@ jobs:
           docker compose exec db mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS test_todos;"
           docker compose exec db mysql -uroot -proot -e "SHOW TABLES FROM test_todos";
 
-      - name: Show Pre-test Log
-        run: docker compose exec app cat storage/logs/laravel.log || true
-
       - name: Exec Phpunit
         run: |
-          docker compose exec -e XDEBUG_MODE=off app php artisan test --env=testing || true
-
-      # テスト実行後にログを確認（テストが失敗しても実行される）
-      - name: Show Post-test Log
-        if: always()
-        run: docker compose exec app cat storage/logs/laravel.log
+          docker compose exec -e XDEBUG_MODE=off app php artisan test --env=testing
