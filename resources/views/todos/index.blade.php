@@ -5,7 +5,7 @@
             <div class="lg:w-2/3 w-full mx-auto">
                 <table class="table-auto w-full text-left whitespace-no-wrap">
                     <tbody>
-                    test2
+                    test6
                         @if (count($todos) === 0)
                             <p class="leading-relaxed mb-8">タスクを登録してください</p>
                         @else
