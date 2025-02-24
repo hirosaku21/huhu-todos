@@ -52,4 +52,8 @@
             </div>
         </div>
     </section>
+
+    @vite(['resources/js/todo/index.js'])
+
 </x-app-layout>
+

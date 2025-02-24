@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: app
     ports:
       - "80:80"
     volumes:
@@ -16,6 +17,7 @@ services:
 
   db:
     image: mysql:8.0
+    container_name: db
     ports:
       - "3306:3306"
     environment:
@@ -25,6 +27,24 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - app-network
+
+  # Laravel Dusk用のselenium
+  selenium:
+      image: selenium/standalone-chrome:latest
+      container_name: selenium
+      platform: linux/amd64
+      environment:
+          - ACCEPT_INSECURE_CERTS=true
+      shm_size: '2g'
+      volumes:
+          - /dev/shm:/dev/shm
+      ports:
+          - "4444:4444"
+          - "7900:7900"
+      networks:
+          - app-network
+      extra_hosts:
+          - "host.docker.internal:host-gateway"
 
 networks:
   app-network:

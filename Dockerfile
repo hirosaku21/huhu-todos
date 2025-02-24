@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libzip-dev \
     zip \
     unzip \
     git
@@ -12,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get update \
     && apt-get install -y nodejs
 
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 RUN pecl install xdebug \
 && docker-php-ext-enable xdebug
