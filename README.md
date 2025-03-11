@@ -64,3 +64,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## ブランチ保護ルール
+
+mainブランチへのマージには以下の条件を満たす必要があります：
+- 少なくとも1つのレビュー承認が必要
+- GitHub Actionsのチェックがパスしていること
+
+これらの制限は、コードの品質維持とチーム開発の効率化のために設定されています。

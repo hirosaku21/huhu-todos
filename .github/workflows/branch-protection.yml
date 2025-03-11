@@ -1,0 +1,26 @@
+name: Branch Protection
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Pull Request Review
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            
+            const hasApproval = reviews.some(review => review.state === 'APPROVED');
+            
+            if (!hasApproval) {
+              core.setFailed('このPRをマージするには、少なくとも1つの承認が必要です。');
+            } 
