@@ -31,8 +31,13 @@ class Todo extends Model
         return $this->belongsTo(User::class, 'completed_by');
     }
 
-    public function registerd_by(): BelongsTo
+    public function registered_by(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'registerd_by');
+        return $this->belongsTo(User::class, 'registered_by', 'id');
+    }
+
+    public function getRegisteredByUserAttribute()
+    {
+        return $this->registered_by()->first();
     }
 }

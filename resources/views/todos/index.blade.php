@@ -53,7 +53,9 @@
         </div>
     </section>
 
-    @vite(['resources/js/todo/index.js'])
+    @if (!app()->environment('testing'))
+        @vite(['resources/js/todo/index.js'])
+    @endif
 
 </x-app-layout>
 
