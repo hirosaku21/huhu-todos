@@ -32,7 +32,9 @@ jobs:
           extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo
           
       - name: Copy .env
-        run: cp .env.example .env.testing
+        run: |
+          cp .env.example .env.testing
+          echo "VITE_ENABLED=false" >> .env.testing
         
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
@@ -49,6 +51,7 @@ jobs:
           DB_DATABASE: testing
           DB_USERNAME: root
           DB_PASSWORD: password
+          VITE_ENABLED: false
 
   check-review:
     runs-on: ubuntu-latest
