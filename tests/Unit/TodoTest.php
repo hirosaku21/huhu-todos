@@ -86,7 +86,9 @@ class TodoTest extends TestCase
             'registered_by' => $this->user->id,
         ]);
 
+        $todo = Todo::with(['category', 'registered_by'])->find($todo->id);
+
         $this->assertInstanceOf(Category::class, $todo->category);
-        $this->assertInstanceOf(User::class, $todo->registerd_by);
+        $this->assertInstanceOf(User::class, $todo->registered_by_user);
     }
 }
