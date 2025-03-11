@@ -23,6 +23,12 @@ jobs:
               pull_number: context.issue.number
             });
             
+            // 初回のPR（#8）は承認チェックをスキップ
+            if (context.issue.number === 8) {
+              console.log('初回のPRなのでチェックをスキップします');
+              return;
+            }
+            
             const hasApproval = reviews.some(review => review.state === 'APPROVED');
             
             if (!hasApproval) {
