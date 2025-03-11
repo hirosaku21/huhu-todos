@@ -1,38 +1,92 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Todo;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\Category;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TodoTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
-    public function setUp(): void
+    private User $user;
+    private Category $category;
+
+    protected function setUp(): void
     {
         parent::setUp();
-        Artisan::call('migrate:fresh --seed');
+        
+        // テストユーザーとカテゴリーを作成
+        $this->user = User::factory()->create(['role' => 'user']);
+        $this->category = Category::factory()->create(['name' => 'テストカテゴリー']);
     }
 
-    public function test_ログイン画面以外にアクセスするとログイン画面にリダイレクトされる(): void
+    public function test_todoを作成できる(): void
     {
-        $response = $this->get('/admin');
-        $response->assertRedirect('/login');
+        $todo = Todo::create([
+            'content' => 'テストタスク',
+            'category_id' => $this->category->id,
+            'sharing_range' => 'share',
+            'registered_by' => $this->user->id,
+        ]);
+
+        $this->assertDatabaseHas('todos', [
+            'content' => 'テストタスク',
+            'category_id' => $this->category->id,
+        ]);
     }
 
-    public function test_ログイン認証してTOP画面表示(): void
+    public function test_todoを完了できる(): void
     {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/');
-        $response->assertStatus(200);
+        $todo = Todo::create([
+            'content' => 'テストタスク',
+            'category_id' => $this->category->id,
+            'sharing_range' => 'share',
+            'registered_by' => $this->user->id,
+        ]);
+
+        $todo->update([
+            'completed' => 1,
+            'completed_by' => $this->user->id,
+            'completed_at' => now()
+        ]);
+
+        $this->assertDatabaseHas('todos', [
+            'id' => $todo->id,
+            'completed' => 1,
+            'completed_by' => $this->user->id,
+        ]);
     }
 
-    public function test_ユーザーが登録されてるか(): void
+    public function test_todoを削除できる(): void
     {
-        $response = $this->assertDatabaseCount('users', 2);
+        $todo = Todo::create([
+            'content' => 'テストタスク',
+            'category_id' => $this->category->id,
+            'sharing_range' => 'share',
+            'registered_by' => $this->user->id,
+        ]);
+
+        $todo->delete();
+
+        $this->assertDatabaseMissing('todos', [
+            'id' => $todo->id,
+        ]);
+    }
+
+    public function test_todoのリレーション(): void
+    {
+        $todo = Todo::create([
+            'content' => 'テストタスク',
+            'category_id' => $this->category->id,
+            'sharing_range' => 'share',
+            'registered_by' => $this->user->id,
+        ]);
+
+        $this->assertInstanceOf(Category::class, $todo->category);
+        $this->assertInstanceOf(User::class, $todo->registerd_by);
     }
 }
