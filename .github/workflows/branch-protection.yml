@@ -10,6 +10,46 @@ permissions:
   contents: read
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: testing
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo
+          
+      - name: Copy .env
+        run: cp .env.example .env.testing
+        
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        
+      - name: Generate key
+        run: php artisan key:generate --env=testing
+        
+      - name: Execute tests
+        run: php artisan test
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: testing
+          DB_USERNAME: root
+          DB_PASSWORD: password
+
   check-review:
     runs-on: ubuntu-latest
     steps:
@@ -22,12 +62,6 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number
             });
-            
-            // 初回のPR（#8）は承認チェックをスキップ
-            if (context.issue.number === 8) {
-              console.log('初回のPRなのでチェックをスキップします');
-              return;
-            }
             
             const hasApproval = reviews.some(review => review.state === 'APPROVED');
             
